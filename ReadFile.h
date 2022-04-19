@@ -13,3 +13,6 @@ void ReadFile(string& fileName, string& country, string& countryCode, string& ci
 
 //read in, put cities into countries map, put populations into city map
 void ReadFile(string& fileName,unordered_map<string,vector<string>>& countries, unordered_map<string, int>& cities);
+
+//read in, put country as key and value as vector of pairs of city and population - USE THIS FUNCTION
+void ReadFile(string& fileName,unordered_map<string,vector<pair<string,int>>>& countries);
