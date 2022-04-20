@@ -8,11 +8,62 @@
 #include <sstream>
 using namespace std;
 
-//read in Country, country code, city, and population with variables passed in
-void ReadFile(string& fileName, string& country, string& countryCode, string& city, int& population);
+//USE THIS FUNCTION
+void ReadFile(string& fileName, unordered_map<string, vector<pair<string, int>>>& countries) {
+    ifstream readFile(fileName);
 
-//read in, put cities into countries map, put populations into city map
-void ReadFile(string& fileName,unordered_map<string,vector<string>>& countries, unordered_map<string, int>& cities);
+    if (readFile.is_open()) {
+        //read heading line
+        string lineInput;
+        getline(readFile, lineInput);
 
-//read in, put country as key and value as vector of pairs of city and population - USE THIS FUNCTION
-void ReadFile(string& fileName,unordered_map<string,vector<pair<string,int>>>& countries);
+        //variables
+        string country;
+        string countryCode;
+        string city;
+        string popStr;
+        int population;
+
+        //loop through all lines and store data into variables
+        while (getline(readFile, lineInput)) {
+            string temp;
+            istringstream stream(lineInput);
+
+            //temporary variables to store the data from file
+            getline(stream, temp, ';');
+
+            //City Name
+            getline(stream, city, ';');
+
+            getline(stream, temp, ';');
+            getline(stream, temp, ';');
+            getline(stream, temp, ';');
+            getline(stream, temp, ';');
+            //Country Name
+            getline(stream, countryCode, ';');
+            //Country Code
+            getline(stream, country, ';');
+
+            getline(stream, temp, ';');
+            getline(stream, temp, ';');
+            getline(stream, temp, ';');
+            getline(stream, temp, ';');
+            getline(stream, temp, ';');
+
+            //Population
+            getline(stream, popStr, ';');
+            //had to generate random values due to bad/invalid population values in original data set
+            population = rand() * 50 + rand();
+            //cout << population << endl;
+
+            getline(stream, temp, ';');
+            getline(stream, temp, ';');
+            getline(stream, temp, ';');
+            getline(stream, temp, ';');
+            getline(stream, temp, ';');
+
+            countries[country].push_back(make_pair(city, population));
+        }
+    }
+    readFile.close();
+}
