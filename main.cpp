@@ -1,9 +1,11 @@
 #include <iostream>
 #include <iterator>
+#include <chrono>
 #include "HeapSort.h"
 #include "quickSort.h"
 #include "ReadFile.h"
 
+//code for using chrono execution time from geeksforgeeks.org
 
 //Print Vector Function
 void printVector(vector<pair<string, int>> cities, string country) {
@@ -19,84 +21,6 @@ int main() {
     string file = "geonames.csv";
     unordered_map<string, vector<pair<string, int>>> countries;
     ReadFile(file, countries);
-
-    /*TESTING
-    vector<int> numbers;
-    for(int i = 0; i < 2000; i++){
-        numbers.push_back(i);
-    }
-    int size = numbers.size();
-    quickSort(numbers, 0, size-1);
-    for(unsigned int i = 0; i < numbers.size(); i++){
-       cout << numbers[i] << endl;
-    }
-    unordered_map<string, vector<pair<string, int>>> ::iterator iter;
-    vector<pair<string, int>> sortVec = countries[country];
-    int endRoot = sortVec.size();
-    quickSort(sortVec, 0, endRoot-1);
-    //printing
-    for (unsigned int i = 0; i < sortVec.size(); i++) {
-        cout << sortVec[i].first << " " << sortVec[i].second << endl;
-    }
-
-    //TESSTING QUICK SORT
-    //Get the input data
-    cout << "Enter Size of array: " << endl;
-    cin >> size;
-    int* myarray = new int[size];
-    //Read the data and store it into a ....
-    cout << "Enter " << size << " integers in any order: " << endl;
-    for (int i = 0; i < size; i++) {
-        cin >> myarray[i];
-    }
-    quickSort(myarray, 0, size - 1);
-    printCities(myarray, size);
-    */
-
-//    string file = "geonames.csv";
-//    unordered_map<string, vector<pair<string, int>>> countries;
-//    ReadFile(file, countries);
-
-    //vector<pair<string, int>> sortVec2 = countries["United States"];
-    //int endRoot = sortVec2.size();
-    //quickSort(sortVec2, 0, endRoot - 1);
-    //for (unsigned int i = 0; i < sortVec2.size(); i++) {
-    //cout << sortVec2[i].first << " " << sortVec2[i].second << endl;
-    //}
-
-
-    /*TESTING
-    vector<int> numbers;
-    for(int i = 0; i < 2000; i++){
-        numbers.push_back(i);
-    }
-    int size = numbers.size();
-    quickSort(numbers, 0, size-1);
-    for(unsigned int i = 0; i < numbers.size(); i++){
-       cout << numbers[i] << endl;
-    }
-    unordered_map<string, vector<pair<string, int>>> ::iterator iter;
-    vector<pair<string, int>> sortVec = countries[country];
-    int endRoot = sortVec.size();
-    quickSort(sortVec, 0, endRoot-1);
-    //printing
-    for (unsigned int i = 0; i < sortVec.size(); i++) {
-        cout << sortVec[i].first << " " << sortVec[i].second << endl;
-    }
-
-    //TESSTING QUICK SORT
-    //Get the input data
-    cout << "Enter Size of array: " << endl;
-    cin >> size;
-    int* myarray = new int[size];
-    //Read the data and store it into a ....
-    cout << "Enter " << size << " integers in any order: " << endl;
-    for (int i = 0; i < size; i++) {
-        cin >> myarray[i];
-    }
-    quickSort(myarray, 0, size - 1);
-    printCities(myarray, size);
-    */
 
     bool endProgram = false;
     //User input with programs features: QS or HS
@@ -130,24 +54,40 @@ int main() {
 
                     case 1:
                     {
+                        //measure execution time
                         cout << "Calling heap sort" << endl;
+                        auto start = std::chrono::high_resolution_clock::now();
                         HeapSort(sortVec);
+                        auto stop = std::chrono::high_resolution_clock::now();
+                        auto duration = std :: chrono :: duration_cast<std::chrono::microseconds>(stop - start);
+
                         //PRINT SORTED VECTOR
                         printVector(sortVec, country);
+                        cout << "Time taken to sort by Heap Sort: " << duration.count() << " microseconds" << endl;
+
                         //Print CITY WITH LARGEST POPULATION
                         cout << "City with largest population in " << country << " is " << sortVec[sortVec.size() - 1].first << " with a population of " << sortVec[sortVec.size() - 1].second << endl;
+                        cout << endl;
                         break;
                     };
 
                     case 2:
                     {
-                        cout << "Calling quick sort" << endl;
+                        //measure execution time
+                        cout << "Calling quick sorts" << endl;
                         int endRoot = sortVec.size();
+                        auto start = std::chrono::high_resolution_clock::now();
                         quickSort(sortVec, 0, endRoot - 1);
+                        auto stop = std::chrono::high_resolution_clock::now();
+                        auto duration = std :: chrono :: duration_cast<std::chrono::microseconds>(stop - start);
+
                         //PRINT SORTED VECTOR
                         printVector(sortVec, country);
+                        cout << "Time taken to sort by Quick Sort: " << duration.count() << " microseconds" << endl;
+
                         //Print CITY WITH LARGEST POPULATION
                         cout << "City with largest population in " << country << " is " << sortVec[sortVec.size() - 1].first << " with a population of " << sortVec[sortVec.size() - 1].second << endl;
+                        cout << endl;
                         break;
                     };
                     default: {
@@ -186,9 +126,18 @@ int main() {
                 cin >> input;
                 switch (input) {
                     case 1: {
-                        cout << "Calling heap sort" << endl;
+                        //get execution time of 1st sort
+                        cout << "Calling heap sorts" << endl;
+                        auto start = std::chrono::high_resolution_clock::now();
                         HeapSort(sortVec1);
+                        auto stop = std::chrono::high_resolution_clock::now();
+                        auto duration = std :: chrono :: duration_cast<std::chrono::microseconds>(stop - start);
+
+                        //get execution time of 2nd sort
+                        auto start2 = std::chrono::high_resolution_clock::now();
                         HeapSort(sortVec2);
+                        auto stop2 = std::chrono::high_resolution_clock::now();
+                        auto duration2 = std :: chrono :: duration_cast<std::chrono::microseconds>(stop2 - start2);
 
                         //PRINT BOTH SORTED VECTORS
                         printVector(sortVec1, country1);
@@ -218,6 +167,7 @@ int main() {
                             }
                         }
 
+                        //compare populations
                         if(population1 > population2){
                             bigCity = city1;
                             smallCity = city2;
@@ -227,19 +177,31 @@ int main() {
                             smallCity = city1;
                         }
 
+                        cout << "First Heap Sort takes " << duration.count() << " microseconds" << endl;
+                        cout << "Second Heap Sort takes " << duration2.count() << " microseconds" << endl;
                         cout << bigCity << " has a bigger population than " << smallCity << endl;
+                        cout << endl;
                         break;
                     };
 
                     case 2: {
+                        //get execution time of 1st sort
                         cout << "Calling quick sort" << endl;
                         int endRoot1 = sortVec1.size();
+                        auto start = std::chrono::high_resolution_clock::now();
                         quickSort(sortVec1, 0, endRoot1 - 1);
+                        auto stop = std::chrono::high_resolution_clock::now();
+                        auto duration = std :: chrono :: duration_cast<std::chrono::microseconds>(stop - start);
                         printVector(sortVec1, country1);
 
+                        //get execution time of 2nd sort
                         int endRoot2 = sortVec2.size();
+                        auto start2 = std::chrono::high_resolution_clock::now();
                         quickSort(sortVec2, 0, endRoot2 - 1);
+                        auto stop2 = std::chrono::high_resolution_clock::now();
+                        auto duration2 = std :: chrono :: duration_cast<std::chrono::microseconds>(stop2 - start2);
                         printVector(sortVec2, country2);
+
 
                         //COMPARE CITIES POPULATION AND PRINT BIGGER POPULATION
                         string bigCity;
@@ -274,7 +236,10 @@ int main() {
                             smallCity = city1;
                         }
 
+                        cout << "First Quick Sort takes " << duration.count() << " microseconds" << endl;
+                        cout << "Second Quick Sort takes " << duration2.count() << " microseconds" << endl;
                         cout << bigCity << " has a bigger population than " << smallCity << endl;
+                        cout << endl;
 
                         break;
                     };
