@@ -1,22 +1,42 @@
-#include "quickSort.h"
+#include <string>
 #include <iostream>
+#include <iterator>
+#include "quickSort.h"
+#include "ReadFile.h"
+#include "HeapSort.h"
 using namespace std;
 
-//Print sorted array
-//Fix to print better
-/*
-void printCities(int arr[], int size) {
-    cout << "Cites in" << country << "in decneding order for population." << endl;
-    for (int i = 0; i < size; i++) {
-        cout << arr[i] << endl;
-    }
-}
-*/
+//Compare Function
+//Print Vector Function
 
 int main()
 {
-    int size = 0;
+    string file = "geonames.csv";
+    unordered_map<string, vector<pair<string, int>>> countries;
+    ReadFile(file, countries);
 
+    /*TESTING
+    vector<int> numbers;
+    for(int i = 0; i < 2000; i++){
+        numbers.push_back(i);
+    }
+    int size = numbers.size();
+    quickSort(numbers, 0, size-1);
+    for(unsigned int i = 0; i < numbers.size(); i++){
+       cout << numbers[i] << endl;
+    }
+    unordered_map<string, vector<pair<string, int>>> ::iterator iter;
+    vector<pair<string, int>> sortVec = countries[country];
+    int endRoot = sortVec.size();
+    quickSort(sortVec, 0, endRoot-1);
+
+    //printing
+    for (unsigned int i = 0; i < sortVec.size(); i++) {
+        cout << sortVec[i].first << " " << sortVec[i].second << endl;
+    }
+
+    
+    //TESSTING QUICK SORT
     //Get the input data
     cout << "Enter Size of array: " << endl;
     cin >> size;
@@ -28,13 +48,9 @@ int main()
         cin >> myarray[i];
     }
     quickSort(myarray, 0, size - 1);
-    for (int i = 0; i < size; i++) {
-        cout << myarray[i] << " ";
-    }
-    cout << endl;
+    printCities(myarray, size);
+    */
 
-    return 0;
-    /*
     bool endProgram = false;
     //User input with programs features: QS or HS
     while (endProgram != true) {
@@ -44,86 +60,120 @@ int main()
     cout << "2. Compare population of two cities to find the largest" << endl;
     cout << "0. Exit" << endl;
     cin >> input;
+    cin.ignore();
 
-    switch (input) {
-    //Largest Population while sorting the population of all cities in country
-
-    /*
-        -Printing function to print Vector with all its data
-        -How to read function
-        -Making a sub vector for smaller cities
-        -Quick Sort algortihim
-
-
-    case 1:
-        //Find which country
-        cout << "which city in what country do you want to find the population" << endl;
-        //Make sub vector with country and sort by cities in country
-        //FIND SIZE TO USE FOR SORTING
-
-        cout << "Which method to find largest city" << endl;
-        cout << "Method 1. Heap Sort" << endl;
-        cout << "Method 2. Quick Sort" << endl;
-        cin >> input;
         switch (input) {
-        //Call HeapSort
-        //Call Print to print vector
-        //Call find to find the city can print it which its population
-        case 1:
-            cout<< "calling heap sort" << endl;
-            break;
-        //Call QuickSort
-        //Call Print to print vector
-        //Call find to find the city can print it which its population
-        case 2:
-            cout << "calling quick sort" << endl;
-            break;
-        default:
-            break;
+            //Largest Population while sorting the population of all cities in country
+            case 1: {
+                string city;
+                string country;
+                cout << "Which city do you want to find the population?" << endl;
+                getline(cin, city);
+                cout << "What country is " << city << " in?" << endl;
+                getline(cin, country);
+
+                //Make sub vector with country and sort by cities in country
+                vector<pair<string, int>> sortVec = countries[country];
+          
+                cout << "Which method do you want to use to find the population of "<< city <<", " <<country << "?" << endl;
+                cout << "Method 1. Heap Sort" << endl;
+                cout << "Method 2. Quick Sort" << endl;
+                cin >> input;
+                switch (input) {
+
+                case 1:
+                {
+                    cout << "Calling heap sort" << endl;
+                    HeapSort(sortVec);
+                    //PRINT SORTED VECTOR
+                    //Print CITY WITH LARGEST POPULATION
+
+                    break;
+                };
+
+                case 2:
+                {
+                    cout << "Calling quick sort" << endl;
+                    int endRoot = sortVec.size();
+                    quickSort(sortVec, 0, endRoot - 1);
+                    //PRINT SORTED VECTOR
+                   //Print CITY WITH LARGEST POPULATION
+                    break;
+                };
+                default: {
+                    break;
+                };
+                }
+
+                endProgram = false;
+                break;
+            };
+
+            //Compare populations
+            case 2: {
+                string city1, country1;
+                cout << "What is the first city you want to compare?" << endl;
+                getline(cin, city1);
+
+                cout << "What country is " << city1 << " in?" << endl;
+                getline(cin, country1);
+
+                //SUB VECTOR WITH ALL CITIES IN COUNTRY
+                vector<pair<string, int>> sortVec1 = countries[country1];
+
+
+                cout << "What is the second city you want to " << city1 << ", " << country1 << "?" << endl;
+                string country2, city2;
+                getline(cin, city2);
+                cout << "What country is " << city2 << " in?" << endl;
+                getline(cin, country2);
+
+                //SUB VECTOR WITH ALL CITIES IN COUNTRY
+                vector<pair<string, int>> sortVec2 = countries[country2];
+
+
+                cout << "Which method do you want to use to compare "<< city1 <<","<<country1 << " and "<< city2<<", "<<country2 <<"?" << endl;
+                cout << "Method 1. Heap Sort" << endl;
+                cout << "Method 2. Quick Sort" << endl;
+                cin >> input;
+                switch (input) {
+                case 1:
+                    cout << "Calling heap sort" << endl;
+                    HeapSort(sortVec1);
+                    HeapSort(sortVec2);
+                    //PRINT BOTH SORTED VECTORS
+                    //COMPARE CITIES POPULATION AND PRINT BIGGERR POPULATION
+                    break;
+
+
+                case 2:
+                    cout << "Calling quick sort" << endl;
+                    int endRoot1 = sortVec1.size();
+                    quickSort(sortVec1, 0, endRoot1 - 1);
+                    //PRINT
+
+                    int endRoot2 = sortVec2.size();
+                    quickSort(sortVec2, 0, endRoot2 - 1);
+                    //PRINT
+                    //COMPARE CITIES POPULATION PRINT BIGGER POPULATION
+                    break;
+                default:
+                    break;
+                }
+                endProgram = false;
+                break;
+            };
+            case 0: {
+                //Breaks while loop and ends code
+                endProgram = true;
+                break;
+            };
+            default: {
+                cout << "Input a valid integer." << endl;
+                endProgram = false;
+                break;
+            };
         }
-
-        endProgram = false;
-        break;
-
-
-    //Compare populations
-    case 2:
-        cout << "Which city/country do you want to compare?" << endl;
-
-
-        cout << "Which method to compare cities" << endl;
-        cout << "Method 1. Heap Sort" << endl;
-        cout << "Method 2. Quick Sort" << endl;
-        cin >> input;
-        switch (input) {
-            //Call HeapSort
-            //Call Print to print vector
-            //Call find to find the city can print it which its population
-        case 1:
-            cout << "calling heap sort" << endl;
-            break;
-            //Call QuickSort
-            //Call Print to print vector
-            //Call find to find the city can print it which its population
-        case 2:
-            cout << "calling quick sort" << endl;
-            break;
-        default:
-            break;
-        }
-        endProgram = false;
-        break;
-
-    case 0:
-        endProgram = true;
-        break;
-
-    default:
-        cout << "Input a valid integer." << endl;
-        endProgram = false;
-        break;
     }
-    }
-    */
 }
 

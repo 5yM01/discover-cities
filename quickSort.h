@@ -1,9 +1,11 @@
 #include <iostream>
+#include <string>
+#include <vector>
 using namespace std;
 
 //CHANGE TO USE A VECTOR
 //Spilting the array from the pivot
-int partition(int arr[], int start, int end)
+int partition(vector<int>& arr, int start, int end)
 {
     //create a pivot with the start value
     int pivot = arr[start];
@@ -19,28 +21,28 @@ int partition(int arr[], int start, int end)
     swap(arr[pivotIndex], arr[start]);
 
     //Sorting left and right parts of the pivot element
-    int i = start;
-    int j = end;
+    int leftSide = start;
+    int rightSide = end;
 
-    while (i < pivotIndex && j > pivotIndex) {
+    while (leftSide < pivotIndex && rightSide > pivotIndex) {
 
-        while (arr[i] <= pivot) {
-            i++;
+        while (arr[leftSide] <= pivot) {
+            leftSide++;
         }
 
-        while (arr[j] > pivot) {
-            j--;
+        while (arr[rightSide] > pivot) {
+            rightSide--;
         }
 
-        if (i < pivotIndex && j > pivotIndex) {
-            swap(arr[i++], arr[j--]);
+        if (leftSide < pivotIndex && rightSide > pivotIndex) {
+            swap(arr[leftSide++], arr[rightSide--]);
         }
     }
 
     return pivotIndex;
 }
 
-void quickSort(int arr[], int start, int end)
+void quickSort(vector<int>& arr, int start, int end)
 {
     //Checks if the sort is valid to be able to sort
     if (start >= end){
