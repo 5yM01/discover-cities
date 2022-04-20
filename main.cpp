@@ -5,7 +5,7 @@
 #include "quickSort.h"
 #include "ReadFile.h"
 
-//code for using chrono execution time from geeksforgeeks.org
+//code for using chrono execution time from geeksforgeeks.org/measure-execution-time-function-cpp/
 
 //Print Vector Function
 void printVector(vector<pair<string, int>> cities, string country) {
@@ -27,8 +27,8 @@ int main() {
     while (endProgram != true) {
         int input;
         cout << "Which feature would you like to use:" << endl;
-        cout << "1. Find largest city by population in a country" << endl;
-        cout << "2. Compare population of two cities to find the largest" << endl;
+        cout << "1. Find largest city by population in a country and see sorted list of city populations by country" << endl;
+        cout << "2. Compare population of two cities to find the largest and see sorted lists of city populations by country" << endl;
         cout << "0. Exit" << endl;
         cin >> input;
         cin.ignore();
@@ -36,6 +36,7 @@ int main() {
         switch (input) {
             //Largest Population while sorting the population of all cities in country
             case 1: {
+                //user input
                 string city;
                 string country;
                 cout << "Which city do you want to find the population?" << endl;
@@ -46,6 +47,7 @@ int main() {
                 //Make sub vector with country and sort by cities in country
                 vector<pair<string, int>> sortVec = countries[country];
 
+                //user input
                 cout << "Which method do you want to use to find the population of "<< city <<", " <<country << "?" << endl;
                 cout << "Method 1. Heap Sort" << endl;
                 cout << "Method 2. Quick Sort" << endl;
@@ -57,6 +59,7 @@ int main() {
                         //measure execution time
                         cout << "Calling heap sort" << endl;
                         auto start = std::chrono::high_resolution_clock::now();
+                        //calling function
                         HeapSort(sortVec);
                         auto stop = std::chrono::high_resolution_clock::now();
                         auto duration = std :: chrono :: duration_cast<std::chrono::microseconds>(stop - start);
@@ -77,6 +80,7 @@ int main() {
                         cout << "Calling quick sorts" << endl;
                         int endRoot = sortVec.size();
                         auto start = std::chrono::high_resolution_clock::now();
+                        //calling function
                         quickSort(sortVec, 0, endRoot - 1);
                         auto stop = std::chrono::high_resolution_clock::now();
                         auto duration = std :: chrono :: duration_cast<std::chrono::microseconds>(stop - start);
@@ -101,6 +105,7 @@ int main() {
 
             //Compare populations
             case 2: {
+                //user input
                 string city1, country1;
                 cout << "What is the first city you want to compare?" << endl;
                 getline(cin, city1);
@@ -111,6 +116,7 @@ int main() {
                 //SUB VECTOR WITH ALL CITIES IN COUNTRY
                 vector<pair<string, int>> sortVec1 = countries[country1];
 
+                //user input
                 cout << "What is the second city you want to compare to " << city1 << ", " << country1 << "?" << endl;
                 string country2, city2;
                 getline(cin, city2);
@@ -120,10 +126,12 @@ int main() {
                 //SUB VECTOR WITH ALL CITIES IN COUNTRY
                 vector<pair<string, int>> sortVec2 = countries[country2];
 
+                //user input
                 cout << "Which method do you want to use to compare "<< city1 <<","<<country1 << " and "<< city2<<", "<<country2 <<"?" << endl;
                 cout << "Method 1. Heap Sort" << endl;
                 cout << "Method 2. Quick Sort" << endl;
                 cin >> input;
+
                 switch (input) {
                     case 1: {
                         //get execution time of 1st sort
@@ -177,6 +185,7 @@ int main() {
                             smallCity = city1;
                         }
 
+                        //print output
                         cout << "First Heap Sort takes " << duration.count() << " microseconds" << endl;
                         cout << "Second Heap Sort takes " << duration2.count() << " microseconds" << endl;
                         cout << bigCity << " has a bigger population than " << smallCity << endl;
@@ -227,6 +236,7 @@ int main() {
                             }
                         }
 
+                        //compare populations
                         if(population1 > population2){
                             bigCity = city1;
                             smallCity = city2;
@@ -236,6 +246,7 @@ int main() {
                             smallCity = city1;
                         }
 
+                        //print output
                         cout << "First Quick Sort takes " << duration.count() << " microseconds" << endl;
                         cout << "Second Quick Sort takes " << duration2.count() << " microseconds" << endl;
                         cout << bigCity << " has a bigger population than " << smallCity << endl;

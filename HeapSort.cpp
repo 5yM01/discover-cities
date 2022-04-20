@@ -63,38 +63,6 @@ vector<pair<string,int>> HeapifyDown(vector<pair<string,int>>& arr, int root, in
     return arr;
 }
 
-vector<int> ExtractMax(vector<int>& arr,vector<int>& sorted, int size){
-    //remove root (max) item, put into sorted array
-    sorted.push_back(arr[0]);
-    arr[0] = arr[size - 1];
-    arr = HeapifyDown(arr,0,size - 1);
-
-    return arr;
-}
-
-bool isMaxHeap(vector<int>& arr, int size){
-    //check every value in array against their children
-    for(int i = 0; i < size; i++){
-        int root = arr[i];
-
-        if((i * 2) + 1 >= size){
-            break;
-        }
-
-        int left = arr[(i * 2) + 1];
-        int right = arr[(i * 2) + 2];
-
-        if(left > root || right > root){
-            return false;
-        }
-        else{
-            continue;
-        }
-
-    }
-    return true;
-}
-
 //Average Time Complexity - O(n log n)
 vector<int> HeapSort(vector<int>& numbers){
     int size = numbers.size();
