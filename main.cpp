@@ -39,7 +39,7 @@ int main() {
                 //user input
                 string city;
                 string country;
-                cout << "Which city do you want to find the population?" << endl;
+                cout << "Which city do you want to find the population of?" << endl;
                 getline(cin, city);
                 cout << "What country is " << city << " in?" << endl;
                 getline(cin, country);
@@ -149,6 +149,9 @@ int main() {
 
                         //PRINT BOTH SORTED VECTORS
                         printVector(sortVec1, country1);
+                        cout << "----------------------------------------------------" << endl;
+                        cout << "----------------------------------------------------" << endl;
+                        cout << "----------------------------------------------------" << endl;
                         printVector(sortVec2, country2);
 
                         //COMPARE CITIES POPULATION AND PRINT BIGGER POPULATION
@@ -202,6 +205,9 @@ int main() {
                         auto stop = std::chrono::high_resolution_clock::now();
                         auto duration = std :: chrono :: duration_cast<std::chrono::microseconds>(stop - start);
                         printVector(sortVec1, country1);
+                        cout << "----------------------------------------------------" << endl;
+                        cout << "----------------------------------------------------" << endl;
+                        cout << "----------------------------------------------------" << endl;
 
                         //get execution time of 2nd sort
                         int endRoot2 = sortVec2.size();
